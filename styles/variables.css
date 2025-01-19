@@ -1,0 +1,18 @@
+:root {
+    /* Primary Colors */
+    --primary-color: #0077cc; /* Royal Blue */
+    --secondary-color: #e1f5fe; /* Light Blue for bot messages */
+    --accent-color: #d1c4e9; /* Lavender for user messages */
+    --button-color: #0077cc; /* Royal Blue for buttons */
+    --button-hover-color: #005fa3; /* Darker Blue on hover */
+    --close-btn-hover-color: #ff6666; /* Light Red on hover */
+    --background-color: #f0f4f8; /* Soft Grey background */
+    --white-color: #ffffff; /* White color */
+    --border-color: #ddd; /* Light border color */
+}
+
+/* Define CSS Variables for Fonts */
+:root {
+    --font-primary: 'Inter', sans-serif; /* Primary Font (for headers) */
+    --font-secondary: 'Roboto', sans-serif; /* Secondary Font (for body) */
+}
