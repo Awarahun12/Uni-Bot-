@@ -4,6 +4,7 @@ import "./globals.css";
 import "../styles/variables.css"
 import "../styles/style.css"
 import "../styles/utilityclasses.css"
+import Provider from "./components/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,9 @@ export default function RootLayout({
   return (
     
     <html lang="en">
+      <Provider>
       <body className={`${inter.className} bg-[#f0f4f8]`}>{children}</body>
+      </Provider>
     </html>
     
   );

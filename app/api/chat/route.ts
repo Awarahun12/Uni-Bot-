@@ -50,6 +50,7 @@ const maskPII = async (text: string): Promise<string> => {
 };
 
 export async function POST(request: NextRequest) {
+  console.log('got a request')
   try {
     const body = await request.json();
     const { messages, data }: { messages: ChatMessage[]; data: any } = body;
@@ -77,9 +78,8 @@ export async function POST(request: NextRequest) {
       role: 'system' as MessageType,
       content: `You are a NLP based chatbot for the University of Haripur name "Uni-Bot", ensuring accuracy and briefness.  
       You always follow these guidelines: 
-      -If user use Urdu language, write urdu in back urdu letters
-      -If the answer isn't available within the context, state that fact
-      -Otherwise, answer to your best capability, refering to source of documents provided
+      -If the answer isn't available within the context, then say I am not trained to answer that questions
+      -Otherwise, answer to your best capability
       -Only use examples if explicitly requested
       -Do not introduce examples outside of the context
       -Do not answer if context is absent

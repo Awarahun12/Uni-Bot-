@@ -1,14 +1,42 @@
 'use client'
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import WelcomeScr from "./components/WelcomeScr";
+import AnswerArea from "./components/AnswerArea";
+import Input from "./components/Input";
+import Header from "./components/Header";
+import { useChat } from 'ai/react'
+
 
 export default function Home() {
   const [isPopupOpen, setIsPopupOpen] = useState(false)
   const [isWelcomeScrOn, setIsWelcomeScrOn] = useState(true)
+  const [showLoader, setShowLoader] = useState(false)
+  const [query, setQuery] = useState('')
+  const chatState = useChat({
+    api: process.env.NEXT_PUBLIC_CHAT_API,
+    headers: {
+      "Content-Type": "application/json", // using JSON because of vercel/ai 2.2.26
+    },
+  });
 
-  const handleClick = () => {
+  const {messages} = chatState;
 
-  }
+  useEffect(() => {
+    if(!query || query === '')
+      return
+
+    if(isWelcomeScrOn) 
+      setIsWelcomeScrOn(false)
+  }, [query])
+
+  useEffect(() => {
+    if (showLoader && messages[messages.length - 1].role !== 'user') setShowLoader(false);
+
+    console.log(messages)
+  }, [messages])
+    
+  
   return (
     <>
       <button id="open-chatbot-popup-btn" onClick={()=> setIsPopupOpen(pre => !pre)}>
@@ -16,82 +44,12 @@ export default function Home() {
       </button>
       <div id="main-container" className={clsx(!isPopupOpen && 'hide')}>
         <div style={{position: "relative"}}>
-          {/* <!-- Chatbot Header --> */}
-          <header>
-            <div className="chat-logo">
-              <img
-                src="/logo.png"
-                alt="logo"
-              />
-              Uni-Bot
-            </div>
+          <Header />
 
-            <div className="flex">
-              <button id="download-btn" className="btn btn-onlyicon">
-                <img
-                  src="/download-white.svg"
-                  alt="_"
-                  style={{width: '20px', height: '20px'}}
-                />
-              </button>
-            </div>
-          </header>
-
-          {/* <!-- main stuff --> */}
           <main>
-            {/* <!-- Welcome Compnent --> */}
-            <div id="welcome-component" className='h1' style={{display: isWelcomeScrOn? '' : 'none'}}>
-              <h2>Welcome To <span>Uni-Bot</span></h2>
-              <p>Ask questions related to The University Of Haripur</p>
-
-              <div id="welcome-input-area" className="in-middle primary-input-area">
-                <input
-                  id="welcome-input-field"
-                  type="text"
-                  placeholder="What's in your mind!"
-                />
-                <img
-                  id="welcome-input-submit-btn"
-                  src="/up-arrow.svg"
-                  alt="T"
-                />
-              </div>
-
-              <div id="built-quries">
-                <span className="built-quiries" onClick={()=> setIsWelcomeScrOn(false)}>
-                  <img src="/education.svg" alt="_" />
-                  Faculty
-                </span>
-                <span className="built-quiries" onClick={()=> setIsWelcomeScrOn(false)}>
-                  <img src="/job-search.svg" alt="_" />
-                  Jobs Related
-                </span>
-                <span className="built-quiries" onClick={()=> setIsWelcomeScrOn(false)}>
-                  <img src="/direction.svg" alt="_" />
-                  Registration
-                </span>
-                <span className="built-quiries" onClick={()=> setIsWelcomeScrOn(false)}>
-                  <img src="/book.svg" alt="_" />
-                  Library Services
-                </span>
-              </div>
-            </div>
-
-            <div id="answer-area" style={{display: isWelcomeScrOn? 'none' : ''}}></div>
-
-            <div id="main-input-area" className={clsx("primary-input-area in-bottom", (!isPopupOpen || isWelcomeScrOn) && 'hide')}>
-              <input
-                id="input-field"
-                type="text"
-                placeholder="What's in your mind!"
-              />
-              <img
-                id="main-input-submit-btn"
-                src="/up-arrow.svg"
-                alt="T"
-              />
-            </div>
-
+            <WelcomeScr chatState={chatState} isWelcomeScrOn={isWelcomeScrOn} setQuery={setQuery} setShowLoader={setShowLoader}/>
+            <AnswerArea chatState={chatState} isWelcomeScrOn={isWelcomeScrOn} showLoader={showLoader}/>
+            <Input chatState={chatState} isPopupOpen={isPopupOpen} isWelcomeScrOn={isWelcomeScrOn} setQuery={setQuery} setShowLoader={setShowLoader}/>
             <div id="hidder"></div>
           </main>
         </div>

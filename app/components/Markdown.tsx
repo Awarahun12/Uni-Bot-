@@ -3,8 +3,6 @@ import ReactMarkdown, { Options } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 
-// import { CodeBlock } from "./codeblock";
-
 const MemoizedReactMarkdown: FC<Options> = memo(
   ReactMarkdown,
   (prevProps, nextProps) =>

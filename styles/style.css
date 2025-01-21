@@ -214,8 +214,9 @@ main {
 
 .user-message {
   background-color: #e0e0e0;
-  max-width: 55%;
+  max-width: 75%;
   align-self: flex-end;
+  /* margin-inline-start: 25%; */
   word-wrap: break-word;
   border-radius: 10px 0px 10px 10px;
   /* border: 2px solid var(--primary-color); */
@@ -253,7 +254,7 @@ input:focus {
 
 #hidder {
   height: 50px;
-  width: 100%;
+  width: 320px;
   background-color: var(--background-color);
   /* border: 2px solid red; */
   z-index: 1;
