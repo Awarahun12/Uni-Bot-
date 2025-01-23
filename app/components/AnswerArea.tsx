@@ -2,6 +2,8 @@ import { ChatRequestOptions, CreateMessage, Message } from 'ai'
 import React, { useEffect, useState } from 'react'
 import clsx from 'clsx';
 import '../../styles/loader.css'
+import Markdown from './Markdown';
+import TextToSpeech from './text_to_speech';
 
 type Props = {
   chatState: {
@@ -22,13 +24,16 @@ function AnswerArea({chatState, isWelcomeScrOn, showLoader}: Props) {
   return (
     <div id="answer-area" className='px-2' style={{display: isWelcomeScrOn? 'none' : ''}}>
       {messages.map(message => (
-        <div key={message.id} className={clsx(message.role === 'user' && 'user-message', message.role !== 'user' && 'bot-message-box')}>
+        <div key={message.id} className={clsx(message.role === 'user' && 'user-message', message.role !== 'user' && 'bot-message-box relative')}>
           {message.role === 'user' ? (
             message.content
           ) : (
             <>
-              <img src="/logo.png" alt="Bot"/>
-              <div className='bot-message'>{message.content}</div>
+              <div className='flex items-center justify-between'>
+              <img src="/logo.png" alt="Bot" className='h-[30px] w-[30px]'/>
+              <TextToSpeech initialText={message.content} />
+              </div>
+              <div className='bot-message'><Markdown content={message.content} /></div>
             </>
           )}
         </div>

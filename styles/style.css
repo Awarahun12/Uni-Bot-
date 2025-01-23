@@ -189,7 +189,7 @@ main {
   gap: 2px;
 }
 
-.bot-message-box > img {
+.bot-message-box > div > img {
   width: 30px;
   height: 30px;
   margin-inline-start: -10px;

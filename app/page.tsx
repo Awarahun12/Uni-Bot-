@@ -31,7 +31,7 @@ export default function Home() {
   }, [query])
 
   useEffect(() => {
-    if (showLoader && messages[messages.length - 1].role !== 'user') setShowLoader(false);
+    if (showLoader && messages[messages.length - 1]?.role !== 'user') setShowLoader(false);
 
     console.log(messages)
   }, [messages])
