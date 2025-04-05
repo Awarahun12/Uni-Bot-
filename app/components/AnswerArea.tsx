@@ -41,7 +41,7 @@ function AnswerArea({chatState, isWelcomeScrOn, showLoader}: Props) {
       {
         showLoader &&
           <div className="bot-message-box">
-            <img src="/logo.png" alt="Bot"/>
+            <img src="/logo.png" alt="Bot" style={{height: '30px', width: '30px'}} />
             <div className='bot-message relative h-32'>
             <div className="banter-loader">
             <div className="banter-loader__box"></div>

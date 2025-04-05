@@ -1,6 +1,9 @@
 import { ChatRequestOptions, CreateMessage, Message } from 'ai';
 import { useChat } from 'ai/react';
+import { Mic } from 'lucide-react';
 import React, { ChangeEventHandler, Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
+import SpeechToText from './SpeechToText';
+import clsx from 'clsx';
 
 type Props = {
   chatState: {
@@ -14,10 +17,11 @@ type Props = {
   setShowLoader: Dispatch<SetStateAction<boolean>>,
   formRef: React.RefObject<HTMLFormElement>,
   setQuery: Dispatch<SetStateAction<string>>,
+  fullView: boolean
 }
 
-function WelcomeInput({chatState ,setQuery, setShowLoader, formRef}: Props) {
-  const {handleInputChange, handleSubmit, input} = chatState
+function WelcomeInput({chatState ,setQuery, setShowLoader, formRef, fullView}: Props) {
+  const {setInput ,handleInputChange, handleSubmit, input} = chatState
 
   const customeHandleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -32,7 +36,19 @@ function WelcomeInput({chatState ,setQuery, setShowLoader, formRef}: Props) {
   }
   
   return (
-      <form ref={formRef} onSubmit={customeHandleSubmit} id="welcome-input-area" className="in-middle primary-input-area">
+    // .primary-input-area {
+    //   padding-block: 10px;
+    //   width: inherit;
+    //   max-width: 360px;
+    //   border: 2px solid var(--primary-color);
+    //   /* background-color: var(--background-color); */
+    //   background-color: white;
+    //   padding-inline: 10px;
+    //   border-radius: 40px;
+    
+    //   z-index: 100;
+    // }
+      <form ref={formRef} onSubmit={customeHandleSubmit} id="welcome-input-area" className={clsx("relative py-[10px] border-2 border-[#0077cc] bg-[#f0f4f8] px-[10px] rounded-[40px] z-50 flex items-center w-full")}>
           <input
             value={input}
             onChange={handleInputChange}
@@ -41,11 +57,12 @@ function WelcomeInput({chatState ,setQuery, setShowLoader, formRef}: Props) {
             placeholder="What's in your mind!"
           />
           <img
-            id="welcome-input-submit-btn"
+            className={clsx("w-[20px] h-[20px] absolute right-[60px] top-[20px] cursor-pointer", fullView && 'right-[65px]')}
             src="/up-arrow.svg"
             alt="T"
             onClick={handleClick}
           />
+          <SpeechToText setInput={setInput} />
       </form>
   )
 }

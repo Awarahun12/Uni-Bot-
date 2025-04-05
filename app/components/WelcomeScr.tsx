@@ -1,6 +1,7 @@
 import React, { ChangeEventHandler, Dispatch, FormEvent, SetStateAction, useRef } from 'react'
 import WelcomeInput from './WelcomeInput'
 import { ChatRequestOptions, CreateMessage, Message } from 'ai'
+import clsx from 'clsx'
 
 type Props = {
   chatState: {
@@ -13,10 +14,11 @@ type Props = {
   },
   setQuery: Dispatch<SetStateAction<string>>,
   setShowLoader: Dispatch<SetStateAction<boolean>>,
-  isWelcomeScrOn: boolean
+  isWelcomeScrOn: boolean,
+  fullView: boolean
 }
 
-function WelcomeScr({chatState, setQuery, setShowLoader, isWelcomeScrOn}: Props) {
+function WelcomeScr({chatState, setQuery, setShowLoader, isWelcomeScrOn, fullView}: Props) {
   const {input, append, setInput} = chatState
   const formRef = useRef<HTMLFormElement>(null)
 
@@ -29,19 +31,34 @@ function WelcomeScr({chatState, setQuery, setShowLoader, isWelcomeScrOn}: Props)
       role: 'user'
     })
     
-    if(formRef.current)
-      formRef.current.requestSubmit()
-
-    console.log(input)
+    setQuery(e.target.innerText)
+    setShowLoader(true)
   }
+  
+
+// #welcome-component {
+//   /* border: 2px solid red; */
+//   margin-block-start: 35%;
+//   /* width: 100%; */
+//   padding-inline: 10px;
+//   /* border: 2px solid red; */
+//   /* margin-block-start: 25vh; */
+//   text-align: center;
+//   font-size: 1.5rem;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 10px;
+//   align-items: center;
+//   justify-content: center;
+// }
   return (
-    <div id="welcome-component" className='h1' style={{display: isWelcomeScrOn? '' : 'none'}}>
-      <h2>Welcome To <span>Uni-Bot</span></h2>
-      <p>Ask questions related to The University Of Haripur</p>
+    <div id='welcome-component' className={clsx('h1 px-[10px] text-center flex flex-col gap-[10px] items-center justify-center', !fullView ? "mt-[35%]" : "mt-[10%]")}style={{display: isWelcomeScrOn? '' : 'none'}}>
+      <h2 className={clsx('text-[3rem]', !fullView && 'text-[28px]')}>Welcome To <span>Uni-Bot</span></h2>
+      <p className='text-sm px-4'>Ask questions related to The University Of Haripur</p>
 
-      <WelcomeInput setQuery={setQuery} setShowLoader={setShowLoader} formRef={formRef} chatState={chatState} />
+      <WelcomeInput setQuery={setQuery} setShowLoader={setShowLoader} formRef={formRef} chatState={chatState} fullView={fullView} />
 
-      <div id="built-quries">
+      <div id="built-quries" className={clsx('flex flex-wrap justify-center gap-5 w-[clamp(300px,55%,550px)] px-5', fullView && 'w-fit')}>
         <span className="built-quiries" onClick={handleClick}>
           <img src="/education.svg" alt="_" />
           Faculty

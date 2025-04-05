@@ -15,29 +15,6 @@
   position: relative;
 }
 
-.primary-input-area {
-  padding-block: 10px;
-  width: inherit;
-
-  border: 2px solid var(--primary-color);
-  /* background-color: var(--background-color); */
-  background-color: white;
-  padding-inline: 10px;
-  border-radius: 40px;
-
-  z-index: 100;
-}
-
-.primary-input-area > img {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  right: 20px;
-  top: 20px;
-
-  cursor: pointer;
-}
-
 .btn {
   background-color: transparent;
   outline: none;
