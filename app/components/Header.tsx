@@ -1,26 +1,14 @@
 import clsx from "clsx";
 import React, { Dispatch, SetStateAction } from "react";
-
-// width: 100%;
-// color: var(--white-color);
-// padding-block: 20px;
-// padding-inline: 10px;
-// display: flex;
-// justify-content: space-between;
-// align-items: center;
-// font-family: var(--font-primary);
-// font-weight: 500;
-// font-size: 18px;
-// background-color: var(--primary-color);
-// position: sticky;
-// border-radius: 15px 15px 0px 0px;
+// @ts-ignore
+import h2p from "html2pdf.js"
 
 function Header({ fullView, setFullView }: { fullView: boolean, setFullView: Dispatch<SetStateAction<boolean>> }) {
   return (
     <header
       className={clsx(
-        "w-full text-white py-5 px-[10px] flex justify-between items-center font-primary font-semibold text-lg bg-[#0077cc] sticky top-0",
-        fullView ? "z-30" : "rounded-t-[15px]"
+        "w-full z-50 text-white py-5 px-[10px] flex justify-between items-center font-primary font-semibold text-lg bg-[#0077cc] sticky top-0",
+        fullView ? "" : "rounded-t-[15px]"
       )}
     >
       <div className="chat-logo">
@@ -29,7 +17,18 @@ function Header({ fullView, setFullView }: { fullView: boolean, setFullView: Dis
       </div>
 
       <div className="flex">
-        <button id="download-btn" className="btn btn-onlyicon">
+        <button id="download-btn" className="btn btn-onlyicon" onClick={() => {
+          const element = document.getElementById("answer-area") as HTMLElement;
+          if (!element) return;
+          const options = {
+            margin: 0.5,
+            filename: 'chat.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+          };
+          h2p().set(options).from(element).save();
+         }}>
           <img
             src="/download-white.svg"
             alt="_"

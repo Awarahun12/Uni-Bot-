@@ -22,7 +22,7 @@ function AnswerArea({chatState, isWelcomeScrOn, showLoader}: Props) {
   const {messages} = chatState
 
   return (
-    <div id="answer-area" className='px-2' style={{display: isWelcomeScrOn? 'none' : ''}}>
+    <div id="answer-area" className='px-2 pb-12' style={{display: isWelcomeScrOn? 'none' : ''}}>
       {messages.map(message => (
         <div key={message.id} className={clsx(message.role === 'user' && 'user-message', message.role !== 'user' && 'bot-message-box relative')}>
           {message.role === 'user' ? (

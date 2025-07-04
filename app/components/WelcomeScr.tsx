@@ -53,7 +53,7 @@ function WelcomeScr({chatState, setQuery, setShowLoader, isWelcomeScrOn, fullVie
 // }
   return (
     <div id='welcome-component' className={clsx('h1 px-[10px] text-center flex flex-col gap-[10px] items-center justify-center', !fullView ? "mt-[35%]" : "mt-[10%]")}style={{display: isWelcomeScrOn? '' : 'none'}}>
-      <h2 className={clsx('text-[3rem]', !fullView && 'text-[28px]')}>Welcome To <span>Uni-Bot</span></h2>
+      <h2 className={clsx('text-[3rem]', !fullView && 'text-[26px]')}>Welcome To <span>Uni-Bot</span></h2>
       <p className='text-sm px-4'>Ask questions related to The University Of Haripur</p>
 
       <WelcomeInput setQuery={setQuery} setShowLoader={setShowLoader} formRef={formRef} chatState={chatState} fullView={fullView} />
